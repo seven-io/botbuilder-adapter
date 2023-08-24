@@ -5,16 +5,16 @@
         "url": "https://github.com/seven-io/botbuilder-adapter/issues"
     },
     "dependencies": {
-        "botbuilder": "^4.13.5",
-        "botkit": "^4.10.0",
-        "node-fetch": "^2.6.1",
-        "sms77-client": "^2.12.0"
+        "botbuilder": "^4.20.0",
+        "botkit": "^4.15.0",
+        "node-fetch": "^2.6.13",
+        "sms77-client": "^2.26.0"
     },
     "description": "Connect Botkit or BotBuilder to send SMS via seven",
     "devDependencies": {
-        "@types/node": "^12.20.15",
-        "ts-node": "^10.0.0",
-        "typescript": "^4.3.2"
+        "@types/node": "^12.20.55",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.1.6"
     },
     "files": [
         "/dist",

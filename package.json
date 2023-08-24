@@ -1,8 +1,8 @@
 {
-    "author": "André Matthies <matthiez@gmail.com> (https://github.com/matthiez)",
+    "author": "seven communications GmbH & Co. KG <support@seven.io> (https://www.seven.io)",
     "bugs": {
-        "email": "support@sms77.io",
-        "url": "https://github.com/sms77io/botbuilder-adapter-sms77-sms/issues"
+        "email": "support@seven.io",
+        "url": "https://github.com/seven-io/botbuilder-adapter/issues"
     },
     "dependencies": {
         "botbuilder": "^4.13.5",
@@ -10,7 +10,7 @@
         "node-fetch": "^2.6.1",
         "sms77-client": "^2.12.0"
     },
-    "description": "Connect Botkit or BotBuilder to send SMS via Sms77",
+    "description": "Connect Botkit or BotBuilder to send SMS via seven",
     "devDependencies": {
         "@types/node": "^12.20.15",
         "ts-node": "^10.0.0",
@@ -20,20 +20,20 @@
         "/dist",
         "/src"
     ],
-    "homepage": "https://github.com/sms77io/botbuilder-adapter-sms77-sms.",
+    "homepage": "https://github.com/seven-io/botbuilder-adapter",
     "keywords": [
         "2fa",
         "gateway",
         "otp",
-        "sms",
-        "sms77"
+        "seven",
+        "sms"
     ],
     "license": "MIT",
     "main": "./dist/index.js",
-    "name": "@sms77.io/botbuilder-adapter-sms",
+    "name": "@seven.io/botbuilder-adapter",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/sms77io/botbuilder-adapter-sms77-sms.git"
+        "url": "git+https://github.com/seven-io/botbuilder-adapter.git"
     },
     "scripts": {
         "build": "tsc",

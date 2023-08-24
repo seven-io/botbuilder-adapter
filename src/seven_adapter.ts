@@ -1,5 +1,5 @@
 /**
- * @module botbuilder-adapter-sms77-sms
+ * @module botbuilder-adapter-seven
  */
 import {
     Activity,
@@ -10,25 +10,25 @@ import {
     TurnContext
 } from 'botbuilder';
 import Debug from 'debug';
-import Sms77Client, {
+import SevenClient, {
     HookAllPayloadInboundSms,
     SmsJsonResponse,
     SmsParams
 } from 'sms77-client';
-import {Sms77BotWorker} from './botworker';
+import {SevenBotWorker} from './botworker';
 
 const Client = require('sms77-client');
-const debug = Debug('botkit:sms77');
+const debug = Debug('botkit:seven');
 
 /**
- * Connect [Botkit](https://www.npmjs.com/package/botkit) or [BotBuilder](https://www.npmjs.com/package/botbuilder) to Sms77's SMS service.
+ * Connect [Botkit](https://www.npmjs.com/package/botkit) or [BotBuilder](https://www.npmjs.com/package/botbuilder) to Seven's SMS service.
  */
-export class Sms77Adapter extends BotAdapter {
+export class SevenAdapter extends BotAdapter {
     /**
      * Name used by Botkit plugin loader
      * @ignore
      */
-    public name = 'Sms77 SMS Adapter';
+    public name = 'Seven SMS Adapter';
 
     /**
      * Object containing one or more Botkit middlewares to bind automatically.
@@ -37,30 +37,30 @@ export class Sms77Adapter extends BotAdapter {
     public middlewares;
 
     /**
-     * A specialized BotWorker for Botkit that exposes Sms77 specific extension methods.
+     * A specialized BotWorker for Botkit that exposes seven specific extension methods.
      * @ignore
      */
-    public botkit_worker = Sms77BotWorker;
+    public botkit_worker = SevenBotWorker;
 
-    private readonly api: Sms77Client;
+    private readonly api: SevenClient;
 
     /**
-     * Create an adapter to handle incoming messages from Sms77's SMS service and translate them into a standard format for processing by your bot.
+     * Create an adapter to handle incoming messages from seven's SMS service and translate them into a standard format for processing by your bot.
      *
      * Use with Botkit:
      *```javascript
-     * const adapter = new Sms77Adapter({
-     *      api_key: process.env.SMS77_API_KEY,
-     *      sms77_number: process.env.SMS77_NUMBER,
+     * const adapter = new SevenAdapter({
+     *      api_key: process.env.SEVEN_API_KEY,
+     *      seven_number: process.env.SEVEN_NUMBER,
      * });
      * const controller = new Botkit({adapter: adapter});
      * ```
      *
      * Use with BotBuilder:
      *```javascript
-     * const adapter = new Sms77Adapter({
-     *      api_key: process.env.SMS77_API_KEY,
-     *      sms77_number: process.env.SMS77_NUMBER,
+     * const adapter = new SevenAdapter({
+     *      api_key: process.env.SEVEN_API_KEY,
+     *      seven_number: process.env.SEVEN_NUMBER,
      * });
      * // set up restify...
      * const server = restify.createServer();
@@ -74,11 +74,11 @@ export class Sms77Adapter extends BotAdapter {
      *
      * @param options An object containing API credentials, a webhook verification token and other options
      */
-    public constructor(private options: Sms77AdapterOptions) {
+    public constructor(private options: SevenAdapterOptions) {
         super();
 
-        if (!options.sms77_number) {
-            const e = 'sms77_number is a required part of the configuration.';
+        if (!options.seven_number) {
+            const e = 'seven_number is a required part of the configuration.';
 
             if (this.options.enable_incomplete) console.error(e);
             else throw new Error(e);
@@ -118,15 +118,15 @@ export class Sms77Adapter extends BotAdapter {
     }
 
     /**
-     * Formats a BotBuilder activity into an outgoing Sms77 SMS message.
+     * Formats a BotBuilder activity into an outgoing Seven SMS message.
      * @param activity A BotBuilder Activity object
-     * @returns a Sms77 message object with {from, text, to}
+     * @returns a Seven message object with {from, text, to}
      */
-    private activityToSms77(activity: Partial<Activity>): SmsParams {
-        console.log('activityToSms77', activity);
+    private activityToSeven(activity: Partial<Activity>): SmsParams {
+        console.log('activityToSeven', activity);
 
         return {
-            from: this.options.sms77_number,
+            from: this.options.seven_number,
             json: true,
             text: activity.text,
             to: activity.conversation.id,
@@ -147,7 +147,7 @@ export class Sms77Adapter extends BotAdapter {
             const activity = activities[a];
 
             if (activity.type === ActivityTypes.Message)
-                (<SmsJsonResponse>await this.api.sms(this.activityToSms77(activity)))
+                (<SmsJsonResponse>await this.api.sms(this.activityToSeven(activity)))
                     .messages.forEach(({id}) => responses.push({id}));
             else debug(
                 `Unknown message type encountered in sendActivities: ${activity.type}`);
@@ -157,20 +157,20 @@ export class Sms77Adapter extends BotAdapter {
     }
 
     /**
-     * Sms77 SMS adapter does not support updateActivity.
+     * Seven SMS adapter does not support updateActivity.
      * @ignore
      */
     public async updateActivity(ctx: TurnContext, act: Partial<Activity>): Promise<void> {
-        debug('Sms77 SMS does not support updating activities.');
+        debug('Seven SMS does not support updating activities.');
     }
 
     /**
-     * Sms77 SMS adapter does not support deleteActivity.
+     * Seven SMS adapter does not support deleteActivity.
      * @ignore
      */
     public async deleteActivity(ctx: TurnContext, ref: Partial<ConversationReference>)
         : Promise<void> {
-        debug('Sms77 SMS does not support deleting activities.');
+        debug('Seven SMS does not support deleting activities.');
     }
 
     /**
@@ -207,7 +207,7 @@ export class Sms77Adapter extends BotAdapter {
 
         const ctx = new TurnContext(this, <Activity>{
             channelData: data,
-            channelId: 'sms77-sms',
+            channelId: 'seven-sms',
             conversation: {
                 id: data.sender
             },
@@ -233,8 +233,8 @@ export class Sms77Adapter extends BotAdapter {
     }
 }
 
-export interface Sms77AdapterOptions {
-    /** API key associated with the sms77 account */
+export interface SevenAdapterOptions {
+    /** API key associated with the seven account */
     api_key: string;
     /**
      * Allow the adapter to startup without a complete configuration.
@@ -242,6 +242,6 @@ export interface Sms77AdapterOptions {
      * This should only be used when getting started.
      */
     enable_incomplete?: boolean;
-    /** Phone number associated with this Sms77 app */
-    sms77_number: string;
+    /** Phone number associated with this seven app */
+    seven_number: string;
 }

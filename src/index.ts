@@ -1,7 +1,7 @@
 /**
- * @module botbuilder-adapter-sms77-sms
+ * @module botbuilder-adapter-seven
  */
 
 globalThis.fetch = require('node-fetch').default;
-export * from './sms77_adapter';
+export * from './seven_adapter';
 export * from './botworker';

@@ -1,19 +1,19 @@
 /**
- * @module botbuilder-adapter-sms77-sms
+ * @module botbuilder-adapter-seven
  */
 
 import {BotWorker} from 'botkit';
 import {ChannelAccount, ConversationAccount} from 'botbuilder';
-import Sms77Client from 'sms77-client';
+import SevenClient from 'sms77-client';
 
 /**
- * A specialized version of [Botkit's core BotWorker class](core.md#BotWorker) that includes additional methods for interacting with Sms77 SMS.
+ * A specialized version of [Botkit's core BotWorker class](core.md#BotWorker) that includes additional methods for interacting with seven SMS.
  * It includes all functionality from the base class, as well as the extension methods below.
- * When using the Sms77Adapter with Botkit, all `bot` objects passed to handler functions will include these extensions.
+ * When using the SevenAdapter with Botkit, all `bot` objects passed to handler functions will include these extensions.
  */
-export class Sms77BotWorker extends BotWorker {
-    /** A copy of the Sms77 API client */
-    public api: Sms77Client;
+export class SevenBotWorker extends BotWorker {
+    /** A copy of the seven API client */
+    public api: SevenClient;
 
     /**
      * Start a conversation with a user identified by their phone number. Useful for sending pro-active messages:
@@ -29,10 +29,10 @@ export class Sms77BotWorker extends BotWorker {
     public async startConversationWithUser(userId: string): Promise<any> {
         return this.changeContext({
             bot: {
-                id: this.controller.getConfig('sms77_number'),
+                id: this.controller.getConfig('seven_number'),
                 name: 'bot',
             },
-            channelId: 'sms77-sms',
+            channelId: 'seven-sms',
             conversation: <ConversationAccount>{id: userId},
             user: <ChannelAccount>{id: userId},
         });

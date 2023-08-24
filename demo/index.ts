@@ -1,21 +1,27 @@
 import {ok} from 'assert';
 import {Botkit} from 'botkit';
-import {Sms77Adapter} from '../src';
+import {SevenAdapter} from '../src';
 
-ok(process.env.SMS77_API_KEY); // an API key from Sms77.io
-ok(process.env.SMS77_INBOUND_DE); // an GSM inbound number from Sms77.io
-ok(process.env.SMS77_RECIPIENT);
+const {
+    SEVEN_API_KEY,
+    SEVEN_INBOUND_DE,
+    SEVEN_RECIPIENT,
+} = process.env
+
+ok(SEVEN_API_KEY); // an API key from seven.io
+ok(SEVEN_INBOUND_DE); // an GSM inbound number from seven.io
+ok(SEVEN_RECIPIENT);
 
 const controller = new Botkit({
-    adapter: new Sms77Adapter({
-        api_key: process.env.SMS77_API_KEY,
-        sms77_number: process.env.SMS77_INBOUND_DE,
+    adapter: new SevenAdapter({
+        api_key: SEVEN_API_KEY,
+        seven_number: SEVEN_INBOUND_DE,
     }),
 });
 
 // trigger flow by sending a SMS
 controller.spawn().then(async bot => {
-    await bot.startConversationWithUser(process.env.SMS77_INBOUND_DE);
+    await bot.startConversationWithUser(SEVEN_INBOUND_DE);
 
     await bot.say('I want to chat with you!');
 }).catch(console.error);
